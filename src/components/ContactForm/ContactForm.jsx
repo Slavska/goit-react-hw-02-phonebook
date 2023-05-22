@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { Component } from 'react';
 import css from './ContactForm.module.css';
 import PropTypes from 'prop-types';
@@ -10,8 +9,7 @@ export class ContactForm extends Component {
     const name = e.target.name.value;
     const number = e.target.number.value;
     const { addContact } = this.props;
-
-    addContact({ id: nanoid(), name, number });
+    addContact({ name, number });
     e.target.reset();
   };
   render() {
@@ -47,7 +45,5 @@ export class ContactForm extends Component {
   }
 }
 ContactForm.propTypes = {
-  number: PropTypes.string,
-  name: PropTypes.string,
   addContact: PropTypes.func.isRequired,
 };

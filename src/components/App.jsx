@@ -3,6 +3,7 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { nanoid } from 'nanoid';
 
 export class App extends Component {
   constructor() {
@@ -17,16 +18,20 @@ export class App extends Component {
       filter: '',
     };
   }
-  addContact = e => {
+  addContact = ({ name, number }) => {
     const added = this.state.contacts.some(
-      contact =>
-        contact.name.toLowerCase().trim() === e.name.toLowerCase().trim()
+      contact => contact.name.toLowerCase().trim() === name.toLowerCase().trim()
     );
     if (added) {
-      Notify.failure(`${e.name} is already in contacts!`);
+      Notify.failure(`${name} is already in contacts!`);
     } else {
+      const newContact = {
+        id: nanoid(),
+        name,
+        number,
+      };
       this.setState(({ contacts }) => ({
-        contacts: [...contacts, e],
+        contacts: [...contacts, newContact],
       }));
     }
   };
